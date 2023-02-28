@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+app()->singleton('saldo', function(){ return new App\Data\Tabungan();});
+
 Route::get('/', function () {
-    return view('welcome');
+    dd(app('saldo'),app('saldo'));
 });
