@@ -1,5 +1,6 @@
 <?php
 
+use App\Notifications\NewVisitor;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -16,9 +17,14 @@ use Illuminate\Support\Facades\Route;
 
 // app()->bind('saldo', function(){ return new App\Data\Tabungan();});
 
-Route::get('/', function(){
-    return view('welcome');
+Route::get('/', function () {
+    if (Auth::user()) {
+        $user = Auth::user();
+        $user->notify(new NewVisitor("welcome {$user->name}"));
+    }
+    return view('/');
 });
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
