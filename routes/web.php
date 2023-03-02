@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,8 +14,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-app()->singleton('saldo', function(){ return new App\Data\Tabungan();});
+// app()->bind('saldo', function(){ return new App\Data\Tabungan();});
 
-Route::get('/', function () {
-    dd(app('saldo'),app('saldo'));
+Route::get('/', function(){
+    return view('welcome');
 });
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
